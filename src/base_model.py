@@ -31,3 +31,36 @@ print(all_data.head())
 print(all_data.tail())	 
 
 print(all_data.info())
+
+def process_gender():
+	# print(all_data['Gender'].mode())
+	all_data['Gender'].fillna('Male', inplace = True)
+	# combined.Fare.fillna(combined.Fare.mean(),inplace=True)
+
+	print('gender processed ok')
+
+process_gender()
+
+print(all_data.info())
+
+def process_married():
+	# print('married mode')
+	# print(all_data['Married'].mode())
+	all_data['Married'].fillna('Yes', inplace = True)
+	print('Married processed ok')
+
+process_married()
+print(all_data.info())
+
+
+def process_dependents():
+	# print('dependents mode')
+	# print(all_data['Dependents'].mode())
+	all_data['Dependents'].fillna(0, inplace = True)
+	# print('Dependents processed ok')
+
+process_dependents()
+print(all_data.info())
+
+print(all_data.shape)
+print(all_data.describe())
