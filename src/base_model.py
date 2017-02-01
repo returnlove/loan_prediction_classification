@@ -1,5 +1,8 @@
 import pandas as pd
-
+from sklearn.cross_validation import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+from sklearn.ensemble import RandomForestClassifier
 #ref: http://ahmedbesbes.com/how-to-score-08134-in-titanic-kaggle-challenge.html
 
 file_path = '../data/'
@@ -63,4 +66,88 @@ process_dependents()
 print(all_data.info())
 
 print(all_data.shape)
-print(all_data.describe())
+print(all_data.info())
+
+def process_selfemp():
+	# print('Self_Employed mode')
+	# print(all_data['Self_Employed'].mode())
+	all_data['Self_Employed'].fillna('No', inplace = True)
+	print('Self_Employed processed ok')
+
+process_selfemp()
+print(all_data.info())
+
+
+def process_loanamount():
+	# print('LoanAmount mode')
+	# print(all_data['LoanAmount'].mode())
+	# print('LoanAmount mean')
+
+	# print(all_data['LoanAmount'].mean())
+
+	all_data.LoanAmount.fillna(120.0, inplace=True)
+	print('LoanAmount processed ok')
+
+process_loanamount()
+print(all_data.info())
+
+def process_loanamountterm():
+	# print('Loan_Amount_Term mode')
+	# print(all_data['Loan_Amount_Term'].mode())
+	# print('Loan_Amount_Term mean')
+
+	# print(all_data['Loan_Amount_Term'].mean())
+
+	all_data.Loan_Amount_Term.fillna(360, inplace=True)
+	print('Loan_Amount_Term processed ok')
+
+process_loanamountterm()
+print(all_data.info())
+
+
+def process_Credit_History():
+	# print('Credit_History mode')
+	# print(all_data['Credit_History'].mode())
+	# print('Credit_History mean')
+
+	# print(all_data['Credit_History'].mean())
+
+	all_data.Credit_History.fillna(1, inplace=True)
+	print('Credit_History processed ok')
+
+process_Credit_History()
+print(all_data.info())
+
+
+def split_train_test():
+	print('before')
+	global train_data
+	global test_data
+	print(train_data.shape)
+	print(test_data.shape)
+	train_data = all_data[:train_len]
+	test_data = all_data[train_len:]
+	print('after')
+	print(train_data.shape)
+	print(test_data.shape)
+
+split_train_test()
+
+# to-do
+# use pandas get dummies for one hot encoding
+
+
+# X_train, X_test, y_train, y_test = train_test_split(train_data, y_train)
+
+# print(X_train.shape)
+# print(X_test.shape)
+# print(y_train.shape)
+# print(y_test.shape)
+
+# clf = RandomForestClassifier()
+# clf.fit(X_train, y_train)
+# print(accuracy_score(y_test, clf.predict(X_test)))
+
+
+
+# LoanAmount
