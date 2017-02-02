@@ -119,19 +119,50 @@ process_Credit_History()
 print(all_data.info())
 
 
+cat_cols = []
+for col in all_data.columns.values:
+	if all_data[col].dtypes == 'object':
+		cat_cols.append(col)
+
+print('cat columns:')
+print(cat_cols)
+cat_cols.remove("Loan_ID")
+
+all_data_new = pd.DataFrame()
+
+
+# print("processing column" + " Gender")
+# var = "Gender"+"_dummy"
+# var = pd.get_dummies(all_data["Gender"], prefix = "Gender")
+# all_data_new = pd.concat([all_data_new, var], axis = 1)
+
+for col in cat_cols:
+	print("processing column" + col)
+	var = col+"_dummy"
+	var = pd.get_dummies(all_data[col], prefix = col).iloc[:,1:]
+	all_data_new = pd.concat([all_data_new, var], axis = 1)
+
+print('all data new')
+print(all_data_new.info())
+
+
+
+
 def split_train_test():
 	print('before')
 	global train_data
 	global test_data
 	print(train_data.shape)
 	print(test_data.shape)
-	train_data = all_data[:train_len]
-	test_data = all_data[train_len:]
+	train_data = all_data_new[:train_len]
+	test_data = all_data_new[train_len:]
 	print('after')
 	print(train_data.shape)
 	print(test_data.shape)
 
 split_train_test()
+
+
 
 # to-do
 # use pandas get dummies for one hot encoding
