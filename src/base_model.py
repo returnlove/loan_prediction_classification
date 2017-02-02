@@ -128,6 +128,17 @@ print('cat columns:')
 print(cat_cols)
 cat_cols.remove("Loan_ID")
 
+non_cat_cols = []
+
+for col in all_data.columns.values:
+	if col not in cat_cols:
+		non_cat_cols.append(col)
+
+non_cat_cols.remove("Loan_ID")
+print('non cat cols')
+
+print(non_cat_cols)
+
 all_data_new = pd.DataFrame()
 
 
@@ -145,8 +156,9 @@ for col in cat_cols:
 print('all data new')
 print(all_data_new.info())
 
+all_data_new = pd.concat([all_data_new, all_data[non_cat_cols]], axis = 1)
 
-
+print(all_data_new.info())
 
 def split_train_test():
 	print('before')
@@ -164,20 +176,23 @@ split_train_test()
 
 
 
-# to-do
-# use pandas get dummies for one hot encoding
+
+X_train, X_test, y_train, y_test = train_test_split(train_data, y_train)
+
+print(X_train.shape)
+print(X_test.shape)
+print(y_train.shape)
+print(y_test.shape)
 
 
-# X_train, X_test, y_train, y_test = train_test_split(train_data, y_train)
+clf = RandomForestClassifier()
+clf.fit(X_train, y_train)
+print('RF score' + str(accuracy_score(y_test, clf.predict(X_test))))
 
-# print(X_train.shape)
-# print(X_test.shape)
-# print(y_train.shape)
-# print(y_test.shape)
 
-# clf = RandomForestClassifier()
-# clf.fit(X_train, y_train)
-# print(accuracy_score(y_test, clf.predict(X_test)))
+clf = LogisticRegression()
+clf.fit(X_train, y_train)
+print('LR score' + str(accuracy_score(y_test, clf.predict(X_test))))
 
 
 
