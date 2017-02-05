@@ -3,6 +3,8 @@ from sklearn.cross_validation import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+# from sklearn.model_selection import cross_val_score
 #ref: http://ahmedbesbes.com/how-to-score-08134-in-titanic-kaggle-challenge.html
 
 file_path = '../data/'
@@ -194,6 +196,25 @@ clf = LogisticRegression()
 clf.fit(X_train, y_train)
 print('LR score' + str(accuracy_score(y_test, clf.predict(X_test))))
 
+
+clf = KNeighborsClassifier()
+clf.fit(X_train, y_train)
+print('KNN score' + str(accuracy_score(y_test, clf.predict(X_test))))
+
+# k fold knn
+
+# mylist = list(range(1,50))
+# neighbors = filter(lambda x: x % 2 != 0, mylist)
+# neighbors = list(range(1,51,2))
+# print(neighbors)
+# cv_scores = []
+
+# for k in neighbors:
+# 	knn = KNeighborsClassifier(n_neighbors = k)
+# 	scores = cross_val_score(clf, X_train, y_train, cv = 10, scoring = 'accuracy')
+# 	cv_scores.append(scores.mean())
+
+# print(cv_scores)
 
 
 # LoanAmount
