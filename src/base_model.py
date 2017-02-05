@@ -197,9 +197,29 @@ clf.fit(X_train, y_train)
 print('LR score' + str(accuracy_score(y_test, clf.predict(X_test))))
 
 
-clf = KNeighborsClassifier()
-clf.fit(X_train, y_train)
-print('KNN score' + str(accuracy_score(y_test, clf.predict(X_test))))
+# clf = KNeighborsClassifier()
+# clf.fit(X_train, y_train)
+# print('KNN score' + str(accuracy_score(y_test, clf.predict(X_test))))
+
+neighbors = list(range(1, 20))
+max_score = 0
+scores =[]
+for i in neighbors:
+	clf = KNeighborsClassifier(n_neighbors = i)
+	clf.fit(X_train, y_train)
+	# print(' K = ' + str(i))
+	# print('KNN score'+ str(accuracy_score(y_test, clf.predict(X_test))))
+	scores.append(accuracy_score(y_test, clf.predict(X_test)))
+	if(accuracy_score(y_test, clf.predict(X_test)) > max_score):
+		print('max val at' + str(i))
+		max_score = accuracy_score(y_test, clf.predict(X_test))
+		print('max score is' + str(max_score))
+
+
+# print('max score')
+print(max(scores))
+
+
 
 # k fold knn
 
