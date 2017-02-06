@@ -4,7 +4,14 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
-# from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import classification_report
+
+# import sklearn
+
+# print(sklearn.__version__)
+
 #ref: http://ahmedbesbes.com/how-to-score-08134-in-titanic-kaggle-challenge.html
 
 file_path = '../data/'
@@ -223,9 +230,9 @@ print(max(scores))
 
 # k fold knn
 
-# mylist = list(range(1,50))
+mylist = list(range(1,50))
 # neighbors = filter(lambda x: x % 2 != 0, mylist)
-# neighbors = list(range(1,51,2))
+neighbors = list(range(1,51,2))
 # print(neighbors)
 # cv_scores = []
 
@@ -236,5 +243,19 @@ print(max(scores))
 
 # print(cv_scores)
 
+parameters = [{'n_neighbors': [i for i in range(1,20)]}]
+clf = GridSearchCV(KNeighborsClassifier(), parameters, cv = 10)
+print(clf)
+clf.fit(X_train, y_train)
+print(clf.best_params_)
+print(clf.best_score_)
+print(dir(clf))
 
-# LoanAmount
+# http://stackoverflow.com/questions/35388647/how-to-use-gridsearchcv-output-for-a-scikit-prediction
+y_true, y_pred = y_test, clf.predict(X_test)
+print(accuracy_score(y_true, y_pred))
+print(classification_report(y_true, y_pred))
+
+
+
+
