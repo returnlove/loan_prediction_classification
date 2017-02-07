@@ -4,9 +4,10 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import GridSearchCV
+# from sklearn.model_selection import cross_val_score
+# from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
+from sklearn.svm import SVC
 
 # import sklearn
 
@@ -228,33 +229,37 @@ print(max(scores))
 
 
 
-# k fold knn
+# grid search cv
 
-mylist = list(range(1,50))
-# neighbors = filter(lambda x: x % 2 != 0, mylist)
-neighbors = list(range(1,51,2))
-# print(neighbors)
-# cv_scores = []
+# mylist = list(range(1,50))
+# neighbors = list(range(1,51,2))
 
-# for k in neighbors:
-# 	knn = KNeighborsClassifier(n_neighbors = k)
-# 	scores = cross_val_score(clf, X_train, y_train, cv = 10, scoring = 'accuracy')
-# 	cv_scores.append(scores.mean())
 
-# print(cv_scores)
+# parameters = [{'n_neighbors': [i for i in range(1,20)]}]
+# clf = GridSearchCV(KNeighborsClassifier(), parameters, cv = 10)
+# print(clf)
+# clf.fit(X_train, y_train)
+# print(clf.best_params_)
+# print(clf.best_score_)
+# print(dir(clf))
 
-parameters = [{'n_neighbors': [i for i in range(1,20)]}]
-clf = GridSearchCV(KNeighborsClassifier(), parameters, cv = 10)
-print(clf)
+# # http://stackoverflow.com/questions/35388647/how-to-use-gridsearchcv-output-for-a-scikit-prediction
+# y_true, y_pred = y_test, clf.predict(X_test)
+# print(accuracy_score(y_true, y_pred))
+# print(classification_report(y_true, y_pred))
+
+# svm
+clf = SVC()
+
 clf.fit(X_train, y_train)
-print(clf.best_params_)
-print(clf.best_score_)
-print(dir(clf))
+print(accuracy_score(y_test, clf.predict(X_test)))
 
-# http://stackoverflow.com/questions/35388647/how-to-use-gridsearchcv-output-for-a-scikit-prediction
-y_true, y_pred = y_test, clf.predict(X_test)
-print(accuracy_score(y_true, y_pred))
-print(classification_report(y_true, y_pred))
+
+clf.fit(X_train, y_train)
+print('SVM score' + str(accuracy_score(y_test, clf.predict(X_test))))
+
+# clf = GridSearchCV(SVM(), parameters, cv = 10)
+
 
 
 
