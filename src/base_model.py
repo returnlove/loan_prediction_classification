@@ -5,9 +5,10 @@ from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 # from sklearn.model_selection import cross_val_score
-# from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.svm import SVC
+from sklearn.naive_bayes import GaussianNB
 
 # import sklearn
 
@@ -231,36 +232,53 @@ print(max(scores))
 
 # grid search cv
 
-# mylist = list(range(1,50))
-# neighbors = list(range(1,51,2))
+mylist = list(range(1,50))
+neighbors = list(range(1,51,2))
 
 
-# parameters = [{'n_neighbors': [i for i in range(1,20)]}]
-# clf = GridSearchCV(KNeighborsClassifier(), parameters, cv = 10)
-# print(clf)
-# clf.fit(X_train, y_train)
-# print(clf.best_params_)
-# print(clf.best_score_)
-# print(dir(clf))
+parameters = [{'n_neighbors': [i for i in range(1,20)]}]
+clf = GridSearchCV(KNeighborsClassifier(), parameters, cv = 10)
+print(clf)
+clf.fit(X_train, y_train)
+print(clf.best_params_)
+print(clf.best_score_)
+print(dir(clf))
 
-# # http://stackoverflow.com/questions/35388647/how-to-use-gridsearchcv-output-for-a-scikit-prediction
-# y_true, y_pred = y_test, clf.predict(X_test)
-# print(accuracy_score(y_true, y_pred))
+# http://stackoverflow.com/questions/35388647/how-to-use-gridsearchcv-output-for-a-scikit-prediction
+y_true, y_pred = y_test, clf.predict(X_test)
+print( "KNeighborsClassifier accuracy score" + str(accuracy_score(y_true, y_pred)))
 # print(classification_report(y_true, y_pred))
 
 # svm
+
+
 clf = SVC()
-
+print('svm object')
+print(clf)
 clf.fit(X_train, y_train)
-print(accuracy_score(y_test, clf.predict(X_test)))
+print('SVM score default' + str(accuracy_score(y_test, clf.predict(X_test))))
+
+# clf = SVC(kernel='rbf')
+
+# clf.fit(X_train, y_train)
+# print('SVM score rbf kernal' + str(accuracy_score(y_test, clf.predict(X_test))))
 
 
+
+# param_grid = [
+#   {'C': [1], 'kernel': ['linear']}
+#   # {'C': [1], 'gamma': [0.001], 'kernel': ['rbf']},
+#  ]
+# clf = GridSearchCV(SVC(), param_grid)
+# print(clf)
+# clf.fit(X_train, y_train)
+# print('best params')
+# print(clf.best_params_)
+# print('best score')
+# print(clf.best_score_)
+
+
+
+clf = GaussianNB()
 clf.fit(X_train, y_train)
-print('SVM score' + str(accuracy_score(y_test, clf.predict(X_test))))
-
-# clf = GridSearchCV(SVM(), parameters, cv = 10)
-
-
-
-
-
+print('NB score' + str(accuracy_score(y_test, clf.predict(X_test))))
